@@ -54,7 +54,6 @@ data = {'WBS ISO': listRefVal,          #input excel coulumn name
         'ATTRIBUTE30': listAtt30Val,    #input excel coulumn name
         'ATTRIBUTE34': listAtt34Val}    #input excel coulumn name
 pcfDF = df(data)
-pcfDF
 writer = ExcelWriter('PCF_output.xlsx')
 pcfDF.to_excel(writer,'PCF',index=False)
 writer.save()
