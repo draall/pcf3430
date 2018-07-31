@@ -21,30 +21,34 @@ for file in os.listdir(targerFolder):
     if bool(re.match('pcf', tempFileEx, re.IGNORECASE)):
         targetFiles.append(os.path.join(targerFolder, file))
 
-for tagerFile in targetFiles:
-    with open(tagerFile, 'r', encoding="utf-8") as file:
-        lines = file.readlines()
-        line = ''
-        iA = 0
-        iB = 0
-        iC = 0
+try:
+    for tagerFile in targetFiles:
+        with open(tagerFile, 'r', encoding="utf-8") as file:
+            lines = file.readlines()
+            line = ''
+            iA = 0
+            iB = 0
+            iC = 0
 
-        for line in lines:
-            lineSplit = re.split('\s+', line)
-            if lineSplit[0] == 'PIPELINE-REFERENCE':
-                pcfRefVal = lineSplit[1]
-                iA = 1
-            if lineSplit[1] == 'ATTRIBUTE30':
-                pcfAtt30Val = lineSplit[2]
-                iB = 1
-            if lineSplit[1] == 'ATTRIBUTE34':
-                pcfAtt34Val = lineSplit[2]
-                iC = 1
-            if iA == 1 and iB == 1 and iC == 1:
-                listRefVal.append(pcfRefVal)
-                listAtt30Val.append(pcfAtt30Val)
-                listAtt34Val.append(pcfAtt34Val)
-                break
+            for line in lines:
+                lineSplit = re.split('\s+', line)
+                if lineSplit[0] == 'PIPELINE-REFERENCE':
+                    pcfRefVal = line[21:].strip()
+                    iA = 1
+                if lineSplit[1] == 'ATTRIBUTE30':
+                    pcfAtt30Val = line[18:].strip()
+                    iB = 1
+                if lineSplit[1] == 'ATTRIBUTE34':
+                    pcfAtt34Val = line[18:].strip()
+                    iC = 1
+                if iA == 1 and iB == 1 and iC == 1:
+                    listRefVal.append(pcfRefVal)
+                    listAtt30Val.append(pcfAtt30Val)
+                    listAtt34Val.append(pcfAtt34Val)
+                    break
+except Exception :
+    print('{} 파일에서 에러가 났어요.'.format(tagerFile))
+
 
 data = {'WBS ISO': listRefVal,          #input excel coulumn name
         'ATTRIBUTE30': listAtt30Val,    #input excel coulumn name
