@@ -29,6 +29,10 @@ try:
             iA = 0
             iB = 0
             iC = 0
+            
+            pcfRefVal = ""
+            pcfAtt30Val = ""
+            pcfAtt34Val = ""
 
             for line in lines:
                 lineSplit = re.split('\s+', line)
@@ -41,11 +45,6 @@ try:
                 if lineSplit[1] == 'ATTRIBUTE34':
                     pcfAtt34Val = line[18:].strip()
                     iC = 1
-                if iA == 1 and iB == 1 and iC == 1:
-                    listRefVal.append(pcfRefVal)
-                    listAtt30Val.append(pcfAtt30Val)
-                    listAtt34Val.append(pcfAtt34Val)
-                    break
 except Exception :
     print('{} 파일에서 에러가 났어요.'.format(tagerFile))
 
